@@ -306,7 +306,7 @@
   .entry li::marker{ color: var(--border-strong); }
 
   /* ---------- Projects ---------- */
-  .project-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .project-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
   .project-card{
     position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
     padding: 26px; display: flex; flex-direction: column; gap: 12px;
@@ -334,6 +334,7 @@
   .media-1{ background-color: var(--accent); background-blend-mode: overlay; }
   .media-2{ background-color: #0EA5B7; background-blend-mode: overlay; }
   .media-3{ background-color: #2E4B9C; background-blend-mode: overlay; }
+  .media-4{ background-color: #16A34A; background-blend-mode: overlay; }
 
   /* ---------- Skills ---------- */
   .skills-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px 44px; }
@@ -611,6 +612,22 @@
             <span class="stack-tag">Reporting</span>
           </div>
           <span class="project-note">Internal Celogen system &middot; not publicly deployed</span>
+        </div>
+
+        <div class="project-card bracket">
+          <div class="project-media media-4" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2 2M18 6l-2 2M6 18l2-2M18 18l-2-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <span class="project-id">SYS&ndash;04</span>
+          <h3>Smart Food Transport &amp; Storage Monitor</h3>
+          <p>HND final-year research project: an ESP32 sensor rig (temperature, humidity, ethylene, methane) feeding a Flask dashboard with a Random Forest model that predicts in real time whether a shipment is still fit for transport &mdash; built to cut food wastage in perishable supply chains, using bananas as the case study.</p>
+          <div class="project-stack">
+            <span class="stack-tag">IoT / ESP32</span>
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Flask</span>
+            <span class="stack-tag">scikit-learn</span>
+          </div>
+          <span class="project-note">HND Computing research project &middot; hardware prototype, not publicly deployed</span>
         </div>
 
       </div>
