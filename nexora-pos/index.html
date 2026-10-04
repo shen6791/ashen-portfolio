@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexora POS — Case study · Ashen Nimsara</title>
+<meta name="description" content="Nexora POS: a cloud point-of-sale and business management system with FIFO inventory, per-shop branding, reports and subscription billing.">
+<meta property="og:title" content="Nexora POS — Cloud POS for Sri Lankan shops">
+<meta property="og:description" content="Fast checkout, FIFO stock costing, per-shop branding, reports and subscription billing.">
+<meta property="og:image" content="images/01-dashboard.webp">
+<style>
+  :root {
+    --bg: #f6f8fb; --surface: #ffffff; --text: #0f172a; --muted: #55627a; --border: #e3e8ef;
+    --brand: #0284c7; --brand-2: #0c1a2b; --accent: #22d3ee; --soft: #e0f2fe;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1220; --surface: #111a2b; --text: #e6edf6; --muted: #93a1b8; --border: #22304a; --soft: #0c2a40; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--brand); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+
+  header.hero { background: linear-gradient(135deg, var(--brand-2), #0b3b5c 55%, var(--brand)); color: #fff; padding: 72px 0 0; overflow: hidden; }
+  .eyebrow { display: inline-block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.12); padding: 4px 10px; border-radius: 99px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.1; margin: 16px 0 12px; letter-spacing: -.02em; }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); max-width: 680px; opacity: .9; margin: 0 0 24px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+  .btn.primary { background: #fff; color: var(--brand-2); }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,.4); }
+  .hero-shot { border-radius: 14px 14px 0 0; box-shadow: 0 -10px 60px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.15); border-bottom: 0; }
+
+  section { padding: 72px 0; }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); max-width: 720px; margin: 0 0 40px; font-size: 18px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .card .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--soft); display: grid; place-items: center; font-size: 20px; margin-bottom: 10px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-bottom: 72px; }
+  .feature.flip { grid-template-columns: 1.25fr 1fr; }
+  .feature.flip .text { order: 2; }
+  .feature ul { padding-left: 20px; color: var(--muted); }
+  .feature li { margin: 6px 0; }
+  .shot { border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(15,23,42,.12); cursor: zoom-in; background: var(--surface); }
+  .pair { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 860px) {
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 20px; }
+    .feature.flip .text { order: 0; }
+  }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; }
+  .gallery figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 15px; }
+
+  .cta { background: var(--brand-2); color: #fff; border-radius: 18px; padding: 40px; text-align: center; }
+  .cta p { opacity: .85; max-width: 560px; margin: 0 auto 22px; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(2,6,23,.82); }
+  dialog img { max-height: 90vh; width: auto; border-radius: 10px; }
+  dialog p { color: #e2e8f0; text-align: center; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="/" style="color:#fff;opacity:.8;text-decoration:none;font-size:14px;display:inline-block;margin-bottom:18px">&larr; Ashen Nimsara &middot; Portfolio</a><br>
+    <span class="eyebrow">Cloud POS · Made for Sri Lanka</span>
+    <h1>Nexora POS</h1>
+    <p class="lead">Point of sale, inventory and business management for retail shops — with FIFO stock costing, each shop's own branding, and built-in subscription billing.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Nexora%20POS%20demo">Book a demo</a>
+      <a class="btn ghost" href="#features">See the features</a>
+    </div>
+    <img class="hero-shot shot" src="images/01-dashboard.webp" width="1600" height="1000" alt="Nexora POS dashboard with the shop logo, sales totals and a 30-day sales chart">
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Everything a shop needs, in one place</h2>
+    <p class="sub">A multi-tenant SaaS: every business gets its own secure, branded workspace. The platform owner manages plans, billing and support from one admin panel.</p>
+    <div class="grid">
+      <div class="card"><div class="ic">🛒</div><h3>Fast checkout</h3><p>Barcode scanning, cash, card and split payments, credit sales, receipts and A4 invoices.</p></div>
+      <div class="card"><div class="ic">📦</div><h3>FIFO inventory</h3><p>Every sale uses the oldest stock batch first, so cost and profit are always accurate.</p></div>
+      <div class="card"><div class="ic">🎨</div><h3>Your brand</h3><p>Logo, colours, 8 themes and 4 invoice designs — previewed live before publishing.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Reports</h3><p>Dashboards, profit &amp; loss, stock, tax, customers and suppliers.</p></div>
+      <div class="card"><div class="ic">🔐</div><h3>Roles &amp; permissions</h3><p>Owner, manager, cashier and staff roles, enforced in the database — not just hidden buttons.</p></div>
+      <div class="card"><div class="ic">🧩</div><h3>Modules</h3><p>Repairs, accounting, CRM, HR, installments, manufacturing, hotel and more.</p></div>
+      <div class="card"><div class="ic">💳</div><h3>Subscription billing</h3><p>WhatsApp/SMS reminders, grace periods, automatic restriction and instant restore.</p></div>
+      <div class="card"><div class="ic">🌗</div><h3>Light &amp; dark</h3><p>Every user chooses their own mode; it follows them on any device.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature">
+      <div class="text">
+        <h2>A POS screen built for speed</h2>
+        <p class="sub" style="margin-bottom:12px">Tap products or scan barcodes. Each line shows its working, and stock levels update after every sale.</p>
+        <ul>
+          <li>Cash, card, multiple payments and credit sales</li>
+          <li>Drafts, quotations and suspended sales</li>
+          <li>Print an 80mm receipt or a full A4 invoice</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/02-pos.webp" width="1600" height="1000" loading="lazy" alt="POS screen with items in the cart and a product grid">
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>Every shop, its own look</h2>
+        <p class="sub" style="margin-bottom:12px">Shop owners upload their logo, pick a theme or their own colours, and choose an invoice design — with a live preview of the real invoice.</p>
+        <ul>
+          <li>8 themes plus custom primary, sidebar and accent colours</li>
+          <li>Classic, Modern, Minimal and Bold invoice designs</li>
+          <li>Logo size and position, bank details, terms, signature lines</li>
+          <li>Nothing changes for staff until the owner presses Publish</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/03-branding-editor.webp" width="1600" height="1000" loading="lazy" alt="Branding and theme editor with live invoice preview">
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>Invoices and receipts that look professional</h2>
+        <p class="sub" style="margin-bottom:12px">The same branding flows into every A4 invoice and 80mm receipt.</p>
+      </div>
+      <div class="pair">
+        <img class="shot" src="images/05-invoice-a4.webp" loading="lazy" alt="A4 invoice in the Modern design">
+        <img class="shot" src="images/06-receipt-80mm.webp" loading="lazy" alt="80mm thermal receipt">
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>Stock you can trust</h2>
+        <p class="sub" style="margin-bottom:12px">FIFO costing: each sale takes stock from the oldest batch first and uses that batch's cost, so your profit figures are real.</p>
+        <ul>
+          <li>See open batches, what's left and which is sold next</li>
+          <li>Full stock history for every product</li>
+          <li>Transfers, adjustments, stock counts and low-stock alerts</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/07-product-fifo-lots.webp" width="1600" height="1000" loading="lazy" alt="Product page showing FIFO stock batches and stock history">
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>A platform you can run as a business</h2>
+        <p class="sub" style="margin-bottom:12px">The super-admin panel manages every shop: plans, feature access, payments, support tickets, announcements and an audit log.</p>
+        <ul>
+          <li>Reminder the day before expiry, then a grace period</li>
+          <li>Unpaid shops are restricted automatically — data is never deleted</li>
+          <li>Recording a payment restores access instantly</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/13-platform-billing.webp" width="1600" height="1000" loading="lazy" alt="Platform billing page listing shops by subscription status">
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>More screens</h2>
+    <p class="sub">Click any image to enlarge. All screenshots use a fictional demo shop.</p>
+    <div class="gallery">
+      <figure><img class="shot" src="images/10-dashboard-dark.webp" loading="lazy" alt="Dashboard in dark mode"><figcaption>Dark mode</figcaption></figure>
+      <figure><img class="shot" src="images/11-pos-dark.webp" loading="lazy" alt="POS in dark mode"><figcaption>POS in dark mode</figcaption></figure>
+      <figure><img class="shot" src="images/08-profit-loss.webp" loading="lazy" alt="Profit and loss report"><figcaption>Profit &amp; loss report</figcaption></figure>
+      <figure><img class="shot" src="images/04-branding-invoice-options.webp" loading="lazy" alt="Invoice design options"><figcaption>Invoice design options</figcaption></figure>
+      <figure><img class="shot" src="images/09-billing-plan.webp" loading="lazy" alt="Shop billing and plan page"><figcaption>Shop's billing &amp; plan page</figcaption></figure>
+      <figure><img class="shot" src="images/12-platform-dashboard.webp" loading="lazy" alt="Platform admin dashboard"><figcaption>Platform admin dashboard</figcaption></figure>
+      <figure><img class="shot" src="images/14-platform-business-billing.webp" loading="lazy" alt="Recording a subscription payment"><figcaption>Recording a payment</figcaption></figure>
+      <figure><img class="shot" src="images/15-platform-features.webp" loading="lazy" alt="Per-shop feature access"><figcaption>Per-shop feature access</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Built with</h2>
+    <div class="stack" style="margin-top:16px">
+      <span class="chip">Next.js</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span>
+      <span class="chip">Supabase · Postgres</span><span class="chip">Row-level security</span><span class="chip">Vercel</span><span class="chip">WhatsApp Cloud API</span>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Want to see it running in your shop?</h2>
+      <p>I'll walk you through the POS, inventory and reports with your own products.</p>
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Nexora%20POS%20demo">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Nexora POS &middot; designed and built by <a href="/">Ashen Nimsara</a> &middot; <a href="https://linkedin.com/in/ashen-nimsara">LinkedIn</a></footer>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear()
+  const dlg = document.getElementById('zoom'), big = dlg.querySelector('img'), cap = dlg.querySelector('p')
+  document.querySelectorAll('img.shot').forEach((im) => im.addEventListener('click', () => {
+    big.src = im.src; big.alt = im.alt; cap.textContent = im.alt; dlg.showModal()
+  }))
+  dlg.addEventListener('click', () => dlg.close())
+</script>
+</body>
+</html>
