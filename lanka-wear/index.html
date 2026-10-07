@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lanka Wear: clothing store for a Colombo brand · Ashen Nimsara</title>
+<meta name="description" content="An online clothing store with its own admin panel, built for a Colombo clothing brand. Cash on delivery, bank transfer and card payments, island-wide delivery fees, and a layout that works properly on phones.">
+<meta property="og:title" content="Lanka Wear: an online clothing store for a Colombo brand">
+<meta property="og:description" content="Storefront, checkout and admin panel. Cash on delivery, bank transfer and card (PayHere).">
+<meta property="og:image" content="images/d01-home.webp">
+<style>
+  :root {
+    --bg: #faf9f7; --surface: #ffffff; --text: #1c1917; --muted: #5b5650; --border: #e2ded8;
+    --ink: #1c1917; --gold: #a16207; --gold-2: #c9a24a; --soft: #f1ece2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #131110; --surface: #1c1917; --text: #ece7df; --muted: #a39d94; --border: #2e2a27; --soft: #26211b; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--gold); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 18px; }
+
+  header.hero { background: #1c1917; color: #fff; padding: 64px 0 0; overflow: hidden;
+    background-image: radial-gradient(60% 80% at 90% 0%, rgba(201,162,74,.28), transparent 60%); }
+  .eyebrow { display: inline-block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-2); }
+  .hero h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; margin: 14px 0 14px; letter-spacing: -.01em; }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); max-width: 660px; opacity: .85; margin: 0 0 26px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 15px; }
+  .btn.primary { background: #fff; color: #1c1917; }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,.4); }
+  .hero-shot { border-radius: 12px 12px 0 0; box-shadow: 0 -10px 60px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.14); border-bottom: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 14px; opacity: .8; margin-bottom: 28px; }
+  .meta b { color: var(--gold-2); font-weight: 600; }
+
+  section { padding: 68px 0; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; margin: 0 0 12px; }
+  .sub { color: var(--muted); max-width: 720px; margin: 0 0 36px; font-size: 18px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-bottom: 68px; }
+  .feature.flip { grid-template-columns: 1.25fr 1fr; }
+  .feature.flip .text { order: 2; }
+  .feature ul { padding-left: 20px; color: var(--muted); }
+  .feature li { margin: 6px 0; }
+  .shot { border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(28,25,23,.14); cursor: zoom-in; background: var(--surface); }
+  @media (max-width: 860px) {
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 20px; }
+    .feature.flip .text { order: 0; }
+  }
+
+  .phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; max-width: 880px; }
+  .phones .shot { border-radius: 18px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; }
+  .gallery figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  .notes li { margin: 10px 0; color: var(--muted); }
+  .notes b { color: var(--text); }
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 15px; }
+
+  .note { background: var(--soft); border-left: 3px solid var(--gold-2); border-radius: 6px; padding: 14px 18px; color: var(--muted); font-size: 15px; }
+  .cta { background: #1c1917; color: #fff; border-radius: 14px; padding: 40px; text-align: center; }
+  .cta p { opacity: .85; max-width: 560px; margin: 0 auto 22px; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(10,8,7,.85); }
+  dialog img { max-height: 90vh; width: auto; border-radius: 10px; }
+  dialog p { color: #e7e2da; text-align: center; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="/" style="color:#fff;opacity:.75;text-decoration:none;font-size:14px;display:inline-block;margin-bottom:18px">&larr; Ashen Nimsara &middot; Portfolio</a><br>
+    <span class="eyebrow">E-commerce &middot; Clothing &middot; Sri Lanka</span>
+    <h1>Lanka Wear</h1>
+    <p class="lead">An online store and admin panel for a clothing brand in Colombo. Customers can pay on delivery, by bank transfer or by card, and the owner runs products, stock and orders from a phone.</p>
+    <div class="meta">
+      <span><b>Role</b> Design &amp; development</span>
+      <span><b>Year</b> 2026</span>
+      <span><b>Status</b> Working prototype</span>
+    </div>
+    <div class="btns">
+      <a class="btn primary" href="https://lanka-wear.vercel.app" target="_blank" rel="noopener">Open the live preview &nearr;</a>
+      <a class="btn ghost" href="https://github.com/shen6791/lanka-wear" target="_blank" rel="noopener">Source on GitHub</a>
+      <a class="btn ghost" href="#features">See how it works</a>
+    </div>
+    <img class="hero-shot shot" src="images/d01-home.webp" width="1600" height="1000" alt="Lanka Wear home page with a full-width fashion photo and the new-arrivals card">
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="note"><b>About the content:</b> this is a prototype built to show a customer how their store could work. The brand name, contact details and bank details are placeholders, and the product photos are free stock photography. Everything else, including checkout and the admin panel, is working code.</div>
+  </div>
+</section>
+
+<section id="features" style="padding-top:0">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="sub">The brief was a store that looks like a proper fashion brand and works the way Sri Lankan customers actually pay and receive things.</p>
+    <div class="grid">
+      <div class="card"><h3>Catalogue with real variants</h3><p>Every product has sizes, colours and stock per combination, a photo gallery, sale prices and a size guide.</p></div>
+      <div class="card"><h3>Three ways to pay</h3><p>Cash on delivery, bank transfer with a payment slip upload, and card payments through PayHere.</p></div>
+      <div class="card"><h3>Delivery that matches the island</h3><p>Fees depend on the district (Colombo area vs the rest), with a free-delivery threshold the owner sets.</p></div>
+      <div class="card"><h3>Order tracking</h3><p>Customers look up an order with the order number and their mobile number. No account needed.</p></div>
+      <div class="card"><h3>Admin panel</h3><p>Dashboard, orders, products, categories, newsletter signups and settings. Cancelling an order puts the stock back.</p></div>
+      <div class="card"><h3>Made for phones</h3><p>Most customers will arrive from Instagram on a phone, so the whole flow was checked down to a 320px screen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature">
+      <div class="text">
+        <h2>Product pages that sell</h2>
+        <p class="sub" style="margin-bottom:12px">Large photos, colour and size pickers that disable what is out of stock, and a clear delivery and exchange summary next to the buy button.</p>
+        <ul>
+          <li>Low-stock warning when five or fewer are left</li>
+          <li>Description, delivery, returns and fit in collapsible sections</li>
+          <li>On phones the photos swipe, and an Add to bag bar stays at the bottom</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d05-product.webp" width="1600" height="1000" loading="lazy" alt="Product page for a midi dress with colour and size pickers">
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>Checkout built around local payment habits</h2>
+        <p class="sub" style="margin-bottom:12px">Guest checkout with Sri Lankan mobile number validation and all 25 districts. The total and delivery fee update as the customer picks a district.</p>
+        <ul>
+          <li>Cash on delivery for customers who prefer to pay at the door</li>
+          <li>Bank transfer shows the account details and takes a slip upload</li>
+          <li>Card payment hands off to PayHere, so card numbers never touch the site</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d06-checkout.webp" width="1600" height="1000" loading="lazy" alt="Checkout page with cash on delivery, card and bank transfer options and an order summary">
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>An admin the owner can actually use</h2>
+        <p class="sub" style="margin-bottom:12px">Open it on a phone between customers: see what came in today, which items are about to sell out, and move an order from pending to delivered.</p>
+        <ul>
+          <li>Update status, mark an order as paid, leave a courier tracking note</li>
+          <li>One tap to call or WhatsApp the customer</li>
+          <li>Payment slips are only visible to the logged-in admin</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d07-admin-dashboard.webp" width="1600" height="1000" loading="lazy" alt="Admin dashboard with today's orders, this month's sales, recent orders and low stock">
+    </div>
+
+    <h2 style="margin-top:8px">On a phone</h2>
+    <p class="sub">The same store at 390px wide.</p>
+    <div class="phones">
+      <img class="shot" src="images/m01-home.webp" loading="lazy" alt="Home page on a phone">
+      <img class="shot" src="images/m02-shop.webp" loading="lazy" alt="Shop page with category chips on a phone">
+      <img class="shot" src="images/m03-product.webp" loading="lazy" alt="Product page with a swipeable photo gallery on a phone">
+      <img class="shot" src="images/m04-cart.webp" loading="lazy" alt="Cart drawer with a free-delivery progress bar on a phone">
+      <img class="shot" src="images/m05-menu.webp" loading="lazy" alt="Slide-in navigation menu on a phone">
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>More screens</h2>
+    <p class="sub">Click any image to enlarge. The admin screenshots use fictional customers and orders.</p>
+    <div class="gallery">
+      <figure><img class="shot" src="images/d02-categories.webp" loading="lazy" alt="Shop by category tiles"><figcaption>Category tiles</figcaption></figure>
+      <figure><img class="shot" src="images/d03-lookbook.webp" loading="lazy" alt="Summer edit banner"><figcaption>Lookbook banner</figcaption></figure>
+      <figure><img class="shot" src="images/d04-shop.webp" loading="lazy" alt="Shop page with filters and a product grid"><figcaption>Shop with filters and sorting</figcaption></figure>
+      <figure><img class="shot" src="images/d08-admin-orders.webp" loading="lazy" alt="Admin orders list"><figcaption>Orders list</figcaption></figure>
+      <figure><img class="shot" src="images/d09-admin-order.webp" loading="lazy" alt="Admin order detail"><figcaption>Order detail and status</figcaption></figure>
+      <figure><img class="shot" src="images/d10-admin-product.webp" loading="lazy" alt="Admin product editor with sizes, colours and stock"><figcaption>Product editor</figcaption></figure>
+      <figure><img class="shot" src="images/d11-admin-settings.webp" loading="lazy" alt="Admin settings for card payments"><figcaption>Card payment settings</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>A few decisions worth mentioning</h2>
+    <ul class="notes" style="padding-left:20px;margin-top:16px">
+      <li><b>Two hosting targets from one codebase.</b> The customer will host on a Sri Lankan cPanel server (Node and MySQL), so the app runs on MySQL there. For the preview I also run it on Vercel with Postgres on Supabase. The data layer picks the right dialect from the connection string.</li>
+      <li><b>No overselling.</b> When an order is placed the server re-prices every line from the database and checks stock inside a transaction, so two people can't buy the last item at the same time.</li>
+      <li><b>Card payments done carefully.</b> PayHere requests are signed on the server, and the payment notification is only trusted after its signature and amount are checked. The owner enters the merchant keys in Settings, and the secret is never shown back.</li>
+      <li><b>Shared database, kept separate.</b> The preview shares a Supabase project with another app, so the store lives in its own schema with a database user that can't see anything else.</li>
+    </ul>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Built with</h2>
+    <div class="stack" style="margin-top:16px">
+      <span class="chip">Next.js</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span>
+      <span class="chip">MySQL</span><span class="chip">Postgres · Supabase</span><span class="chip">PayHere</span><span class="chip">Vercel</span><span class="chip">cPanel Node.js</span>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Need a store like this?</h2>
+      <p>Tell me what you sell and how your customers pay, and I'll show you what it would look like with your products.</p>
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Online%20store%20enquiry">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Designed and built by <a href="/">Ashen Nimsara</a> &middot; <a href="https://linkedin.com/in/ashen-nimsara">LinkedIn</a> &middot; <a href="https://github.com/shen6791">GitHub</a></footer>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear()
+  const dlg = document.getElementById('zoom'), big = dlg.querySelector('img'), cap = dlg.querySelector('p')
+  document.querySelectorAll('img.shot').forEach((im) => im.addEventListener('click', () => {
+    big.src = im.src; big.alt = im.alt; cap.textContent = im.alt; dlg.showModal()
+  }))
+  dlg.addEventListener('click', () => dlg.close())
+</script>
+</body>
+</html>
