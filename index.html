@@ -59,7 +59,7 @@
 
   /* hero */
   .hero { padding: clamp(48px, 9vw, 104px) 0 clamp(40px, 7vw, 80px); background: radial-gradient(60% 90% at 88% 8%, var(--sky) 0%, transparent 70%), radial-gradient(50% 80% at 8% 100%, var(--accent-soft) 0%, transparent 70%); }
-  .hero-in { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: clamp(28px, 6vw, 72px); align-items: center; }
+  .hero-in { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: clamp(28px, 6vw, 72px); align-items: center; }
   .status { display: inline-flex; align-items: center; gap: 9px; font-size: 14.5px; font-weight: 600; color: var(--accent); background: #fff; border: 1px solid var(--line); padding: 6px 14px 6px 11px; border-radius: 999px; margin: 0 0 20px; }
   .dot { width: 9px; height: 9px; border-radius: 50%; background: #2fb36a; flex: none; }
   .kicker { font-weight: 600; color: var(--accent); margin: 0 0 10px; font-size: 16px; }
@@ -76,7 +76,7 @@
   .textlinks { display: flex; gap: 18px; margin-left: 6px; font-weight: 500; }
   .textlinks a { color: var(--muted); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line); }
   .textlinks a:hover { color: var(--accent); text-decoration-color: var(--accent); }
-  .portrait img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 14%; border-radius: 28px; border: 5px solid #fff; box-shadow: 0 18px 40px -18px rgba(11, 80, 70, .35), 0 0 0 1px var(--line); image-rendering: auto; }
+  .portrait img { width: 100%; aspect-ratio: 380 / 641; object-fit: cover; object-position: 50% 50%; border-radius: 24px; border: 5px solid #fff; box-shadow: 0 18px 40px -18px rgba(11, 80, 70, .35), 0 0 0 1px var(--line); image-rendering: auto; }
   @media (max-width: 760px) { .hero-in { grid-template-columns: 1fr; } .portrait { order: -1; width: 124px; } .portrait img { border-radius: 20px; } }
 
   /* sections */
@@ -191,7 +191,7 @@
         </div>
       </div>
       <div class="portrait fadein" style="animation-delay:.1s">
-        <img src="images/ashen.jpg" width="220" height="220" alt="Portrait of Ashen Nimsara">
+        <img src="images/ashen.jpg" width="380" height="641" alt="Portrait of Ashen Nimsara">
       </div>
     </div>
   </section>
