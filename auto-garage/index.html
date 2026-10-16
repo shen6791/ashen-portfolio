@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff5a1f'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Arial,sans-serif' font-size='36' font-weight='700' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<title>Auto Garage: website and booking system for a repair workshop · Ashen Nimsara</title>
+<meta name="description" content="A website for a vehicle repair and servicing business, with a working booking form, WhatsApp and click-to-call, spam protection and a light, fast, accessible design.">
+<meta property="og:title" content="Auto Garage: website and booking system for a repair workshop">
+<meta property="og:description" content="Next.js site with a booking form that delivers by email or webhook, WhatsApp integration and real server-side validation.">
+<meta property="og:image" content="images/d01-home.webp">
+<style>
+  :root { color-scheme: light; }
+  :root {
+    --bg: #fafafa; --surface: #ffffff; --text: #0b0b0d; --muted: #5b5e67; --border: #e3e5e9;
+    --ink: #0b0b0d; --accent: #e84a10; --accent-2: #ff5a1f; --soft: #f4f5f7;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--accent); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 18px; }
+
+  header.hero { background: var(--ink); color: #fff; padding: 64px 0 0; overflow: hidden; }
+  .eyebrow { display: inline-block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); }
+  .hero h1 { font-weight: 700; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; margin: 14px 0 14px; letter-spacing: -.02em; }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); max-width: 680px; opacity: .85; margin: 0 0 26px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 15px; }
+  .btn.primary { background: var(--accent-2); color: #fff; }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,.4); }
+  .hero-shot { border-radius: 12px 12px 0 0; border: 1px solid rgba(255,255,255,.14); border-bottom: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 14px; opacity: .85; margin-bottom: 28px; }
+  .meta b { color: var(--accent-2); font-weight: 600; }
+
+  section { padding: 68px 0; }
+  h2 { font-weight: 700; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); max-width: 720px; margin: 0 0 36px; font-size: 18px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-bottom: 68px; }
+  .feature.flip { grid-template-columns: 1.25fr 1fr; }
+  .feature.flip .text { order: 2; }
+  .feature ul { padding-left: 20px; color: var(--muted); }
+  .feature li { margin: 6px 0; }
+  .shot { border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(11,11,13,.12); cursor: zoom-in; background: var(--surface); }
+  @media (max-width: 860px) {
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 20px; }
+    .feature.flip .text { order: 0; }
+  }
+
+  .phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; max-width: 880px; }
+  .phones .shot { border-radius: 18px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; }
+  .gallery figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  .notes li { margin: 10px 0; color: var(--muted); }
+  .notes b { color: var(--text); }
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 15px; }
+
+  .note { background: var(--soft); border-left: 3px solid var(--accent-2); border-radius: 6px; padding: 14px 18px; color: var(--muted); font-size: 15px; }
+  .cta { background: var(--ink); color: #fff; border-radius: 14px; padding: 40px; text-align: center; }
+  .cta p { opacity: .85; max-width: 560px; margin: 0 auto 22px; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(10,8,7,.85); }
+  dialog img { max-height: 90vh; width: auto; border-radius: 10px; }
+  dialog p { color: #e7e2da; text-align: center; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="/" style="color:#fff;opacity:.75;text-decoration:none;font-size:14px;display:inline-block;margin-bottom:18px">&larr; Ashen Nimsara &middot; Portfolio</a><br>
+    <span class="eyebrow">Business website &middot; Automotive &middot; Sri Lanka</span>
+    <h1>Auto Garage</h1>
+    <p class="lead">A fast, accessible website for a vehicle repair workshop, with a booking form that actually delivers the request to the owner, plus WhatsApp and click-to-call for customers who would rather chat.</p>
+    <div class="meta">
+      <span><b>Role</b> Design &amp; development</span>
+      <span><b>Year</b> 2026</span>
+      <span><b>Status</b> Demo, ready for a client's details</span>
+    </div>
+    <div class="btns">
+      <a class="btn primary" href="https://apex-garage-eight.vercel.app" target="_blank" rel="noopener">Open the live demo &nearr;</a>
+      <a class="btn ghost" href="#features">See how it works</a>
+    </div>
+    <img class="hero-shot shot" src="images/d01-home.webp" width="1600" height="1000" alt="Auto Garage home page with a looping video of a mechanic at work behind the headline">
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="note"><b>About the content:</b> this is a ready-to-brand template. The business name, phone, email, address and hours are placeholders, the photos and hero video are free stock media, and there are no made-up reviews or statistics. Where a detail is missing the page says so instead of inventing one. The booking system and WhatsApp integration are working code.</div>
+  </div>
+</section>
+
+<section id="features" style="padding-top:0">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="sub">The brief was a site that looks like a premium automotive brand, loads quickly on a phone, and turns visitors into booking requests.</p>
+    <div class="grid">
+      <div class="card"><h3>Booking requests that arrive</h3><p>Name, phone, vehicle, service and date are validated in the browser and again on the server, then sent by email (Resend) or to a webhook.</p></div>
+      <div class="card"><h3>Honest success and error states</h3><p>"Request sent" only appears if a delivery channel accepted the message. With nothing configured the form says setup is required.</p></div>
+      <div class="card"><h3>Spam protection</h3><p>Hidden honeypot field, minimum fill time, same-origin check, rate limiting, and optional Cloudflare Turnstile.</p></div>
+      <div class="card"><h3>WhatsApp and calling</h3><p>A floating WhatsApp button with a pre-filled enquiry, and tap-to-call links on mobile. Both use the owner's own numbers from settings.</p></div>
+      <div class="card"><h3>Editable by the owner</h3><p>Services, hours, photos, gallery, statistics and reviews all live in one config file. Contact details come from environment variables.</p></div>
+      <div class="card"><h3>SEO and accessibility</h3><p>Open Graph image, sitemap, robots.txt, structured data that only uses confirmed details, keyboard navigation, focus states and reduced-motion support.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature">
+      <div class="text">
+        <h2>Services built around the vehicle</h2>
+        <p class="sub" style="margin-bottom:12px">Eight service cards with clear descriptions, icons and hover feedback, staggered in as the page scrolls.</p>
+        <ul>
+          <li>Diagnostics, servicing, brakes, oil, A/C, suspension, electrical and pre-purchase checks</li>
+          <li>Services are one editable list and feed the booking form's dropdown</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d02-services.webp" width="1600" height="1000" loading="lazy" alt="Services section with eight cards">
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>A booking form people finish</h2>
+        <p class="sub" style="margin-bottom:12px">Short, labelled fields with inline errors that move focus to the first problem, and a loading state on the button while it sends.</p>
+        <ul>
+          <li>Phone, date and length checks run on the client and again on the server</li>
+          <li>Registration number and message are optional</li>
+          <li>The form is clearly a request, not a confirmed appointment</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d06-booking.webp" width="1600" height="1000" loading="lazy" alt="Booking request form filled in with a sample customer">
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>A workshop gallery with a lightbox</h2>
+        <p class="sub" style="margin-bottom:12px">A responsive image grid with hover effects. Click a photo for a full-size view that works with arrow keys and Escape.</p>
+        <ul>
+          <li>Images are served as AVIF or WebP and lazy loaded</li>
+          <li>The owner swaps in real workshop photos by editing one list</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/d04-gallery.webp" width="1600" height="1000" loading="lazy" alt="Responsive workshop photo grid">
+    </div>
+
+    <h2 style="margin-top:8px">On a phone</h2>
+    <p class="sub">Designed mobile-first, shown here at 390px wide.</p>
+    <div class="phones">
+      <img class="shot" src="images/m01-home.webp" loading="lazy" alt="Home page on a phone">
+      <img class="shot" src="images/m02-services.webp" loading="lazy" alt="Services on a phone">
+      <img class="shot" src="images/m03-booking.webp" loading="lazy" alt="Booking form on a phone">
+      <img class="shot" src="images/m04-menu.webp" loading="lazy" alt="Mobile navigation menu">
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>More screens</h2>
+    <p class="sub">Click any image to enlarge.</p>
+    <div class="gallery">
+      <figure><img class="shot" src="images/d03-about.webp" loading="lazy" alt="About the garage section"><figcaption>About the garage</figcaption></figure>
+      <figure><img class="shot" src="images/d05-lightbox.webp" loading="lazy" alt="Gallery lightbox"><figcaption>Gallery lightbox</figcaption></figure>
+      <figure><img class="shot" src="images/d07-contact.webp" loading="lazy" alt="Contact section with setup notices"><figcaption>Contact section (flags missing details until the owner adds them)</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>A few decisions worth mentioning</h2>
+    <ul class="notes" style="padding-left:20px;margin-top:16px">
+      <li><b>Never a fake success.</b> The API only returns success when email or the webhook really accepted the request. Network failures, missing setup and delivery errors each show their own message.</li>
+      <li><b>No invented business claims.</b> Reviews, statistics, certifications and contact details are left empty or marked as placeholders until the owner supplies real ones. The structured data skips anything not configured.</li>
+      <li><b>Bots get nothing.</b> A filled honeypot or an instant submit receives a silent fake success and delivers nothing, so bots get no signal to adapt to.</li>
+      <li><b>Motion with restraint.</b> Entrance and scroll animations use Motion, the hero parallax and background video switch off for reduced-motion and data-saver users, and there is no loading screen.</li>
+      <li><b>Secrets stay on the server.</b> API keys live in environment variables and the form posts to a server route, so nothing sensitive reaches the browser.</li>
+    </ul>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Built with</h2>
+    <div class="stack" style="margin-top:16px">
+      <span class="chip">Next.js</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span>
+      <span class="chip">Motion</span><span class="chip">Zod</span><span class="chip">Resend</span><span class="chip">Vercel</span>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Need a website like this?</h2>
+      <p>Tell me about your business and I'll show you what it would look like with your name, photos and services.</p>
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Website%20enquiry">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Designed and built by <a href="/">Ashen Nimsara</a> &middot; <a href="https://linkedin.com/in/ashen-nimsara">LinkedIn</a> &middot; <a href="https://github.com/shen6791">GitHub</a></footer>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear()
+  const dlg = document.getElementById('zoom'), big = dlg.querySelector('img'), cap = dlg.querySelector('p')
+  document.querySelectorAll('img.shot').forEach((im) => im.addEventListener('click', () => {
+    big.src = im.src; big.alt = im.alt; cap.textContent = im.alt; dlg.showModal()
+  }))
+  dlg.addEventListener('click', () => dlg.close())
+</script>
+</body>
+</html>
