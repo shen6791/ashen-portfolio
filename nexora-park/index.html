@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b7a6e'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Arial,sans-serif' font-size='36' font-weight='700' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<title>Nexora Park — Case study · Ashen Nimsara</title>
+<meta name="description" content="Nexora Park: a parking SaaS for car park operators. Gate check-in from any phone, number plate scanning, printed tickets, hourly price charts, drive-off fines, reports and subscription billing.">
+<meta property="og:title" content="Nexora Park — run a car park from any phone">
+<meta property="og:description" content="Plate scanning, printed tickets, hourly pricing, drive-off fines, live reports and a multi-business platform.">
+<meta property="og:image" content="images/01-dashboard.webp">
+<style>
+  :root { color-scheme: light; }
+  :root {
+    --bg: #f7f5ff; --surface: #ffffff; --text: #1c1530; --muted: #5f5878; --border: #e6e1f5;
+    --brand: #7c3aed; --brand-2: #1c1035; --accent: #db2777; --soft: #f1eaff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--brand); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+
+  header.hero { background: linear-gradient(135deg, var(--brand-2), #4c1d95 55%, var(--accent)); color: #fff; padding: 72px 0 0; overflow: hidden; }
+  .eyebrow { display: inline-block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.14); padding: 4px 10px; border-radius: 99px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.1; margin: 16px 0 12px; letter-spacing: -.02em; }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); max-width: 700px; opacity: .92; margin: 0 0 24px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+  .btn.primary { background: #fff; color: var(--brand-2); }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,.45); }
+  .hero-shot { border-radius: 14px 14px 0 0; box-shadow: 0 -10px 60px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.15); border-bottom: 0; }
+
+  section { padding: 72px 0; }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); max-width: 720px; margin: 0 0 40px; font-size: 18px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .card .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--soft); display: grid; place-items: center; font-size: 20px; margin-bottom: 10px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; margin-bottom: 72px; }
+  .feature.flip { grid-template-columns: 1.25fr 1fr; }
+  .feature.flip .text { order: 2; }
+  .feature ul { padding-left: 20px; color: var(--muted); }
+  .feature li { margin: 6px 0; }
+  .shot { border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(28,21,48,.14); cursor: zoom-in; background: var(--surface); }
+  .phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start; }
+  .phones .shot { border-radius: 18px; }
+  .phones figure { margin: 0; }
+  .phones figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; }
+  @media (max-width: 860px) {
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 20px; }
+    .feature.flip .text { order: 0; }
+  }
+  @media (max-width: 520px) { .phones { grid-template-columns: 1fr 1fr; } }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; }
+  .gallery figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 15px; }
+
+  .note { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: 12px; padding: 18px 20px; color: var(--muted); }
+  .note strong { color: var(--text); }
+
+  .cta { background: var(--brand-2); color: #fff; border-radius: 18px; padding: 40px; text-align: center; }
+  .cta p { opacity: .85; max-width: 560px; margin: 0 auto 22px; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(10,5,25,.84); }
+  dialog img { max-height: 90vh; width: auto; border-radius: 10px; }
+  dialog p { color: #e9e3ff; text-align: center; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="/" style="color:#fff;opacity:.8;text-decoration:none;font-size:14px;display:inline-block;margin-bottom:18px">&larr; Ashen Nimsara &middot; Portfolio</a><br>
+    <span class="eyebrow">Parking SaaS · Made for Sri Lanka</span>
+    <h1>Nexora Park</h1>
+    <p class="lead">Run a car park from any phone. Gate agents scan the number plate, print a ticket and collect the right fee; owners see every rupee live. Built to replace a legacy parking system for a car park operator in Peradeniya, then opened up as a SaaS for other operators.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Nexora%20Park%20demo">Book a demo</a>
+      <a class="btn ghost" href="https://nexora-park.vercel.app" target="_blank" rel="noopener">Visit live site &nearr;</a>
+      <a class="btn ghost" href="#features">See the features</a>
+    </div>
+    <img class="hero-shot shot" src="images/01-dashboard.webp" width="1600" height="1000" alt="Nexora Park dashboard with revenue, fines, vehicle counts and a daily revenue chart">
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Everything a car park needs</h2>
+    <p class="sub">A multi-business SaaS: each operator gets its own workspace and shop code, its agents sign in on their phones, and the platform owner manages plans and payments from one panel.</p>
+    <div class="grid">
+      <div class="card"><div class="ic">📷</div><h3>Plate scanning</h3><p>Point the phone at the plate. It is read on the device, matched to Sri Lankan formats and filled in.</p></div>
+      <div class="card"><div class="ic">🎟️</div><h3>Printed tickets</h3><p>Ticket on entry, receipt on exit, sized for 58 mm and 80 mm thermal printers.</p></div>
+      <div class="card"><div class="ic">⏱️</div><h3>Hourly price charts</h3><p>A price for every hour, per section and vehicle type, with free grace minutes.</p></div>
+      <div class="card"><div class="ic">🚫</div><h3>Drive-off fines</h3><p>Vehicles that leave without paying get a fine that pops up the next time they park.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Live reports</h3><p>Revenue by day, section, vehicle type and agent, with filters and Excel export.</p></div>
+      <div class="card"><div class="ic">🔎</div><h3>Vehicle history</h3><p>Every visit, time parked, payments and unpaid fines for any number plate.</p></div>
+      <div class="card"><div class="ic">💳</div><h3>Subscriptions</h3><p>Free trial, plan limits, a grace period, then a paused gate until payment is recorded.</p></div>
+      <div class="card"><div class="ic">🌗</div><h3>Light &amp; dark</h3><p>A bright, simple design that works on cheap phones in the sun and at night.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feature">
+      <div class="text">
+        <h2>Scan the plate, tap once</h2>
+        <p class="sub" style="margin-bottom:12px">Agents photograph the number plate. The app finds the plate in the photo, reads it on the phone and checks it against Sri Lankan plate formats.</p>
+        <ul>
+          <li>Finds small, distant plates by locating the bright plate shape first, then enlarging it</li>
+          <li>Fixes common misreads such as O/0, I/1, S/5 and B/8 by position</li>
+          <li>Knows the car from past visits: pre-selects its type and flags unpaid fines</li>
+          <li>Free and private: no API costs, and the photo never leaves the phone</li>
+        </ul>
+      </div>
+      <div class="phones">
+        <figure><img class="shot" src="images/02-gate.webp" loading="lazy" alt="Gate screen with scan button and colourful vehicle type buttons"><figcaption>Gate screen</figcaption></figure>
+        <figure><img class="shot" src="images/03-scan-plate.webp" loading="lazy" alt="Plate read from a photo, with visit history and an unpaid fine"><figcaption>Plate read + history</figcaption></figure>
+        <figure><img class="shot" src="images/04-ticket.webp" loading="lazy" alt="Printable parking ticket"><figcaption>Printed ticket</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>The right fee, and no more drive-offs</h2>
+        <p class="sub" style="margin-bottom:12px">At check-out the fee is worked out from the price chart, and any fine from an earlier drive-off is added with one tick.</p>
+        <ul>
+          <li>Every started hour counts, with free grace minutes</li>
+          <li>"Left without paying" adds a fine to that plate</li>
+          <li>End-of-day close turns forgotten open tickets into fines</li>
+          <li>The receipt shows parking and past fines separately</li>
+        </ul>
+      </div>
+      <div class="phones">
+        <figure><img class="shot" src="images/11-checkout-fines.webp" loading="lazy" alt="Check-out screen collecting an unpaid fine"><figcaption>Check-out with a fine</figcaption></figure>
+        <figure><img class="shot" src="images/12-receipt.webp" loading="lazy" alt="Receipt showing parking fee and past fines"><figcaption>Receipt</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>Every ticket, every filter</h2>
+        <p class="sub" style="margin-bottom:12px">Owners filter by date, plate, ticket, status, park, section, vehicle type and agent, then export to Excel.</p>
+        <ul>
+          <li>Revenue, still parked, drive-offs and fines at a glance</li>
+          <li>Times shown in the business's own timezone</li>
+          <li>Close a forgotten ticket straight from the report</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/05-reports.webp" width="1600" height="1000" loading="lazy" alt="Reports page with filters, colourful totals and a ticket list">
+    </div>
+
+    <div class="feature flip">
+      <div class="text">
+        <h2>Know every vehicle</h2>
+        <p class="sub" style="margin-bottom:12px">Type any plate to see how often it parks, how long it stays, what it has paid and whether it owes a fine.</p>
+        <ul>
+          <li>Fuzzy matching: "cab1234" finds "WP CAB-1234"</li>
+          <li>Record unpaid fines as paid from the owner's side</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/06-vehicle-lookup.webp" width="1600" height="1000" loading="lazy" alt="Vehicle lookup showing visits, total time parked, payments and fines">
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h2>A platform you can run as a business</h2>
+        <p class="sub" style="margin-bottom:12px">New operators sign up for a free trial. The super-admin panel records payments, changes plans, extends trials, suspends accounts and keeps an audit log.</p>
+        <ul>
+          <li>Plan limits on car parks and agents, enforced when adding them</li>
+          <li>Warning before expiry, then a grace period, then a paused gate</li>
+          <li>Data is never deleted; recording a payment restores access instantly</li>
+        </ul>
+      </div>
+      <img class="shot" src="images/13-platform-overview.webp" width="1600" height="1000" loading="lazy" alt="Platform overview with business counts, trials, lapsed accounts and payments">
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>More screens</h2>
+    <p class="sub">Click any image to enlarge. All screenshots use a fictional demo car park, "Kandy Lake Parking".</p>
+    <div class="gallery">
+      <figure><img class="shot" src="images/14-dashboard-dark.webp" loading="lazy" alt="Dashboard in dark mode"><figcaption>Dark mode</figcaption></figure>
+      <figure><img class="shot" src="images/07-price-chart.webp" loading="lazy" alt="Price chart editor with 14 hourly prices per vehicle type"><figcaption>Hourly price chart</figcaption></figure>
+      <figure><img class="shot" src="images/08-parks.webp" loading="lazy" alt="Parks and sections setup"><figcaption>Parks &amp; sections</figcaption></figure>
+      <figure><img class="shot" src="images/09-agents.webp" loading="lazy" alt="Agents list with roles and status"><figcaption>Gate agents</figcaption></figure>
+      <figure><img class="shot" src="images/15-platform-businesses.webp" loading="lazy" alt="Platform list of businesses with plan and status"><figcaption>Platform: businesses</figcaption></figure>
+      <figure><img class="shot" src="images/10-landing.webp" loading="lazy" alt="Public landing page with pricing"><figcaption>Public landing page</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>How it is built</h2>
+    <p class="note">
+      <strong>One database, two products.</strong> Nexora Park shares a Supabase Postgres database with my POS product but lives in its own schema, with its own logins (shop code + username, since gate agents rarely have email). The schema is not exposed to the public API and has row-level security switched on with no policies, so only the server can reach it. Every query is scoped to the signed-in business, and the "one open ticket per plate" rule is enforced by a unique index as well as in code.
+    </p>
+    <div class="stack" style="margin-top:20px">
+      <span class="chip">Next.js 16</span><span class="chip">React 19</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS 4</span>
+      <span class="chip">Postgres (Supabase)</span><span class="chip">Tesseract.js OCR</span><span class="chip">ExcelJS</span><span class="chip">Vercel</span>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Running a car park?</h2>
+      <p>I'll set it up with your sections, prices and gate staff, and show it working on your own phone.</p>
+      <a class="btn primary" href="mailto:animsara3@gmail.com?subject=Nexora%20Park%20demo">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Nexora Park &middot; designed and built by <a href="/">Ashen Nimsara</a> &middot; <a href="https://linkedin.com/in/ashen-nimsara">LinkedIn</a></footer>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear()
+  const dlg = document.getElementById('zoom'), big = dlg.querySelector('img'), cap = dlg.querySelector('p')
+  document.querySelectorAll('img.shot').forEach((im) => im.addEventListener('click', () => {
+    big.src = im.src; big.alt = im.alt; cap.textContent = im.alt; dlg.showModal()
+  }))
+  dlg.addEventListener('click', () => dlg.close())
+</script>
+</body>
+</html>
